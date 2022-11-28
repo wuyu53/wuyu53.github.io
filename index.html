@@ -9,6 +9,28 @@
     <canvas id="unity-canvas" width=1280 height=720 style="width: 1280px; height: 720px; background: #231F20"></canvas>
     <script src="Build/test.loader.js"></script>
     <script>
+      <button Type="button" onclick="TestSend()">WebToUnity</button>
+      
+      var gameInstance = null;
+      script.onload = () => {
+        gameInstance = createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "test.data.unityweb",
+        frameworkUrl: "test.framework.js.unityweb",
+        codeUrl: "test.wasm.unityweb",
+        symbolsUrl: "test.symbols.json.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "VR",
+        productVersion: "0.1",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+        });
+      };
+      function TestSend() {
+        gameInstance.then((unityInstance) => {
+          unityInstance.SendMessage("Canvas","OnLogin","dqwreqweraf");        
+        });
+      }
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
@@ -24,18 +46,6 @@
         document.body.style.textAlign = "left";
       }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "test.data.unityweb",
-        frameworkUrl: "test.framework.js.unityweb",
-        codeUrl: "test.wasm.unityweb",
-        symbolsUrl: "test.symbols.json.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "VR",
-        productVersion: "0.1",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      });
     </script>
   </body>
 </html>
